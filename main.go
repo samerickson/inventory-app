@@ -1,38 +1,41 @@
 package main
 
 import (
-	"database/sql"
-	"fmt"
 	"log"
 	"os"
 
-	_ "github.com/lib/pq"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
+
 	"github.com/joho/godotenv"
+	_ "github.com/lib/pq"
 )
+
+type Box struct {
+	gorm.Model
+	Name     string `gorm:"unique"`
+	Location string
+	Id       uint `gorm:"primaryKey;autoIncrement"`
+}
 
 func main() {
 	if err := godotenv.Load(); err != nil {
 		log.Print("No .env file found")
-}
+	}
 
 	// Define the connection string.
-	user:= os.Getenv("POSTGRES_USER")
-	pass:= os.Getenv("POSTGRES_PASSWORD")
+	user := os.Getenv("POSTGRES_USER")
+	pass := os.Getenv("POSTGRES_PASSWORD")
 
-	connStr := "user=" + user + " dbname=default_database sslmode=disable password=" + pass
+	dsn := "user=" + user + " dbname=default_database sslmode=disable password=" + pass
 
-	// Open the connection.
-	db, err := sql.Open("postgres", connStr)
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
-		log.Fatal(err)
-	}
-	defer db.Close()
-
-	// Verify the connection.
-	err = db.Ping()
-	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("failed to connect to database: %v", err)
 	}
 
-	fmt.Println("Successfully connected to the database!")
+	// Auto Migrate
+	db.AutoMigrate(&Box{})
+
+	log.Println("Database connection successful")
 }
