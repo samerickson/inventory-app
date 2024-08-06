@@ -68,10 +68,10 @@ func getBox(c *gin.Context) {
 
 	var box Box
 	if err := db.Where("id = ?", id).First(&box).Error; err != nil {
-		c.AbortWithStatus(404)
+		c.AbortWithStatus(http.StatusNotFound)
 		fmt.Println(err)
 	} else {
-		c.JSON(200, box)
+		c.JSON(http.StatusOK, box)
 	}
 }
 
@@ -97,10 +97,10 @@ func createBox(c *gin.Context) {
 func getAllBoxes(c *gin.Context) {
 	var boxes []Box
 	if err := db.Find(&boxes).Error; err != nil {
-		c.AbortWithStatus(404)
+		c.AbortWithStatus(http.StatusNotFound)
 		fmt.Println(err)
 	} else {
-		c.JSON(200, boxes)
+		c.JSON(http.StatusOK, boxes)
 	}
 }
 
@@ -110,5 +110,5 @@ func deleteBox(c *gin.Context) {
 	var box Box
 	d := db.Delete(&box, id)
 	fmt.Println(d)
-	c.JSON(200, gin.H{"id": id, "result": "deleted"})
+	c.JSON(http.StatusOK, gin.H{"id": id, "result": "deleted"})
 }
