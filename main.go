@@ -7,6 +7,7 @@ import (
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 
+	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 )
@@ -37,5 +38,15 @@ func main() {
 	// Auto Migrate
 	db.AutoMigrate(&Box{})
 
+	r := gin.Default()
+
+	r.GET("/", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"message": "Hello World",
+		})
+	})
+
 	log.Println("Database connection successful")
+
+	r.Run()
 }
