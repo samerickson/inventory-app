@@ -75,11 +75,11 @@ func getBox(c *gin.Context) {
 	}
 }
 
-func createBox(ctx *gin.Context) {
+func createBox(c *gin.Context) {
 	var newBox Box
 
-	if err := ctx.BindJSON(&newBox); err != nil {
-		ctx.Status(http.StatusBadRequest)
+	if err := c.BindJSON(&newBox); err != nil {
+		c.Status(http.StatusBadRequest)
 		return
 	}
 
@@ -87,16 +87,16 @@ func createBox(ctx *gin.Context) {
 
 	fmt.Printf("Result: %#v\n", result)
 
-	ctx.JSON(http.StatusOK, newBox)
+	c.JSON(http.StatusOK, newBox)
 }
 
-func getAllBoxes(ctx *gin.Context) {
+func getAllBoxes(c *gin.Context) {
 	var boxes []Box
 	if err := db.Find(&boxes).Error; err != nil {
-		ctx.AbortWithStatus(404)
+		c.AbortWithStatus(404)
 		fmt.Println(err)
 	} else {
-		ctx.JSON(200, boxes)
+		c.JSON(200, boxes)
 	}
 }
 
