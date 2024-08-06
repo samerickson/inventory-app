@@ -54,6 +54,7 @@ func main() {
 	})
 
 	r.POST("/box", createBox)
+	r.GET("/box/all", getAllBoxes)
 
 	log.Println("Database connection successful")
 
@@ -73,4 +74,14 @@ func createBox(ctx *gin.Context) {
 	fmt.Printf("Result: %#v\n", result)
 
 	ctx.JSON(http.StatusOK, newBox)
+}
+
+func getAllBoxes(ctx *gin.Context) {
+	var boxes []Box
+	if err := db.Find(&boxes).Error; err != nil {
+		ctx.AbortWithStatus(404)
+		fmt.Println(err)
+	} else {
+		ctx.JSON(200, boxes)
+	}
 }
