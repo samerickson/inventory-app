@@ -1,7 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"log"
+	"net/http"
 	"os"
 
 	"gorm.io/driver/postgres"
@@ -14,10 +16,15 @@ import (
 
 type Box struct {
 	gorm.Model
-	Name     string `gorm:"unique"`
-	Location string
-	Id       uint `gorm:"primaryKey;autoIncrement"`
+	Name     string `json:"name" gorm:"unique"`
+	Location string `json:"location"`
+	Id       uint   `json:"id" gorm:"primaryKey;autoIncrement"`
 }
+
+var (
+	db  *gorm.DB
+	err error
+)
 
 func main() {
 	if err := godotenv.Load(); err != nil {
@@ -30,7 +37,7 @@ func main() {
 
 	dsn := "user=" + user + " dbname=default_database sslmode=disable password=" + pass
 
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	db, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatalf("failed to connect to database: %v", err)
 	}
@@ -46,7 +53,24 @@ func main() {
 		})
 	})
 
+	r.POST("/box", createBox)
+
 	log.Println("Database connection successful")
 
 	r.Run()
+}
+
+func createBox(ctx *gin.Context) {
+	var newBox Box
+
+	if err := ctx.BindJSON(&newBox); err != nil {
+		ctx.Status(http.StatusBadRequest)
+		return
+	}
+
+	result := db.Create(&newBox)
+
+	fmt.Printf("Result: %#v\n", result)
+
+	ctx.JSON(http.StatusOK, newBox)
 }
