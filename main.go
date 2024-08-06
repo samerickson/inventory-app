@@ -55,6 +55,7 @@ func main() {
 
 	r.POST("/box", createBox)
 	r.GET("/box/all", getAllBoxes)
+	r.DELETE("/box/:id", deleteBox)
 
 	log.Println("Database connection successful")
 
@@ -84,4 +85,13 @@ func getAllBoxes(ctx *gin.Context) {
 	} else {
 		ctx.JSON(200, boxes)
 	}
+}
+
+func deleteBox(c *gin.Context) {
+	id := c.Params.ByName("id")
+
+	var box Box
+	d := db.Delete(&box, id)
+	fmt.Println(d)
+	c.JSON(200, gin.H{"id": id, "result": "deleted"})
 }
