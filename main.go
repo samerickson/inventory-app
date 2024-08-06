@@ -84,8 +84,12 @@ func createBox(c *gin.Context) {
 	}
 
 	result := db.Create(&newBox)
-
 	fmt.Printf("Result: %#v\n", result)
+
+	if result.Error != nil {
+		c.AbortWithStatus(http.StatusBadRequest)
+		return
+	}
 
 	c.JSON(http.StatusOK, newBox)
 }
