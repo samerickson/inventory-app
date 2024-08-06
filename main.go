@@ -55,11 +55,24 @@ func main() {
 
 	r.POST("/box", createBox)
 	r.GET("/box/all", getAllBoxes)
+	r.GET("/box/:id", getBox)
 	r.DELETE("/box/:id", deleteBox)
 
 	log.Println("Database connection successful")
 
 	r.Run()
+}
+
+func getBox(c *gin.Context) {
+	id := c.Params.ByName("id")
+
+	var box Box
+	if err := db.Where("id = ?", id).First(&box).Error; err != nil {
+		c.AbortWithStatus(404)
+		fmt.Println(err)
+	} else {
+		c.JSON(200, box)
+	}
 }
 
 func createBox(ctx *gin.Context) {
