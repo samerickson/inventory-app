@@ -1,6 +1,7 @@
 version: '3'
 services:
   database:
+    env_file: ".env"
     image: 'postgres:latest'
     ports:
       - 5432:5432

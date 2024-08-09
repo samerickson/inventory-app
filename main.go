@@ -34,8 +34,9 @@ func main() {
 	// Define the connection string.
 	user := os.Getenv("POSTGRES_USER")
 	pass := os.Getenv("POSTGRES_PASSWORD")
+	host := os.Getenv("POSTGRES_HOST")
 
-	dsn := "user=" + user + " dbname=default_database sslmode=disable password=" + pass
+	dsn := "host= " + host + " user=" + user + " dbname=default_database sslmode=disable password=" + pass
 
 	db, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
