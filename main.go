@@ -29,6 +29,7 @@ func main() {
 
 		v1 := r.Group("/v1")
 		routes.AddBoxes(v1)
+		routes.AddItems(v1)
 
 		r.Run()
 	}
