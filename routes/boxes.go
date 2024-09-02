@@ -13,7 +13,7 @@ func AddBoxes(rg *gin.RouterGroup) {
 	r := rg.Group("/box")
 
 	r.POST("/", createBox)
-	r.GET("/all", getAllBoxes)
+	r.GET("/", getAllBoxes)
 	r.GET("/:id", getBox)
 	r.DELETE("/:id", deleteBox)
 }
