@@ -7,7 +7,3 @@ type Item struct {
 	Name       string `json:"name" gorm:"unique"`
 	Id         uint   `json:"id" gorm:"primaryKey;autoIncrement"`
 }
-
-type ItemDto struct {
-	Name string `json:"name" gorm:"unique"`
-}
