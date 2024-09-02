@@ -14,6 +14,7 @@ func AddItems(rg *gin.RouterGroup) {
 
 	r.GET("/", getAllItems)
 	r.POST("/", createItem)
+	r.DELETE(("/:id"), deleteItem)
 }
 
 func getAllItems(c *gin.Context) {
@@ -43,4 +44,12 @@ func createItem(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, newItem)
+}
+
+func deleteItem(c *gin.Context) {
+	id := c.Params.ByName("id")
+
+	var item models.Item
+	persistence.Db.Delete(&item, id)
+	c.JSON(http.StatusOK, gin.H{"id": id, "result": "deleted"})
 }
