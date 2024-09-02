@@ -35,6 +35,7 @@ func ConnectDb() bool {
 
 	// Auto Migrate
 	Db.AutoMigrate(&models.Box{})
+	Db.AutoMigrate(&models.Item{})
 
 	log.Println("Database connection successful")
 
