@@ -63,7 +63,6 @@ func deleteBox(c *gin.Context) {
 	id := c.Params.ByName("id")
 
 	var box models.Box
-	d := persistence.Db.Delete(&box, id)
-	fmt.Println(d)
+	persistence.Db.Delete(&box, id)
 	c.JSON(http.StatusOK, gin.H{"id": id, "result": "deleted"})
 }
