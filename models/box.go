@@ -7,4 +7,5 @@ type Box struct {
 	Name       string `json:"name"`
 	Location   string `json:"location"`
 	Id         uint   `json:"id" gorm:"primaryKey;autoIncrement"`
+	Items      []Item `json:"items"`
 }

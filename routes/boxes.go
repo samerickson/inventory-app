@@ -51,7 +51,7 @@ func createBox(c *gin.Context) {
 
 func getAllBoxes(c *gin.Context) {
 	var boxes []models.Box
-	if err := persistence.Db.Find(&boxes).Error; err != nil {
+	if err := persistence.Db.Preload("Items").Find(&boxes).Error; err != nil {
 		c.AbortWithStatus(http.StatusNotFound)
 		fmt.Println(err)
 	} else {
