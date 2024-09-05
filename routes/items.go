@@ -13,8 +13,21 @@ func AddItems(rg *gin.RouterGroup) {
 	r := rg.Group("/item")
 
 	r.GET("/", getAllItems)
+	r.GET("/:id", getItem)
 	r.POST("/", createItem)
 	r.DELETE(("/:id"), deleteItem)
+}
+
+func getItem(c *gin.Context) {
+	id := c.Params.ByName("id")
+
+	var item models.Item
+	if err := persistence.Db.Where("id = ?", id).First(&item).Error; err != nil {
+		c.AbortWithStatus(http.StatusNotFound)
+		fmt.Println(err)
+	} else {
+		c.JSON(http.StatusOK, item)
+	}
 }
 
 func getAllItems(c *gin.Context) {
