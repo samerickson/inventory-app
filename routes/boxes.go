@@ -22,7 +22,7 @@ func getBox(c *gin.Context) {
 	id := c.Params.ByName("id")
 
 	var box models.Box
-	if err := persistence.Db.Where("id = ?", id).First(&box).Error; err != nil {
+	if err := persistence.Db.Preload("Items").Where("id = ?", id).First(&box).Error; err != nil {
 		c.AbortWithStatus(http.StatusNotFound)
 		fmt.Println(err)
 	} else {
