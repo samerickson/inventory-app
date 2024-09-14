@@ -7,12 +7,8 @@ const box = ref();
 
 // TODO: handle 404 or other errors.
 fetch(`http://localhost:8080/v1/box/${route.params.id}`).then(async (response) => {
-  console.log(response)
   box.value = await response.json();
 });
-
-
-console.log(route.params.id)
 </script>
 
 <template>
