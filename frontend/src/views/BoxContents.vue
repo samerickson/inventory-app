@@ -1,14 +1,20 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
 const route = useRoute()
 const box = ref();
 
-// TODO: handle 404 or other errors.
-fetch(`http://localhost:8080/v1/box/${route.params.id}`).then(async (response) => {
-  box.value = await response.json();
-});
+const loadContents = () => {
+  // TODO: handle 404 or other errors.
+  fetch(`http://localhost:8080/v1/box/${route.params.id}`).then(async (response) => {
+    box.value = await response.json();
+  });
+}
+
+onMounted(() => {
+  loadContents();
+})
 </script>
 
 <template>

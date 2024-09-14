@@ -4,23 +4,53 @@ import { ref } from 'vue';
 const name = ref();
 const location = ref();
 
+const emit = defineEmits(['created'])
+
 const submit = () => {
 fetch("http://localhost:8080/v1/box/", {
   method: "POST",
   body: JSON.stringify({ name: name.value, location: location.value })
+}).then(() => {
+  emit('created')
 }).catch(error => {
   console.error(error)
+}).finally(() => {
+  clearInputs();
 })
 }
+
+const clearInputs = () => {
+  name.value = ""
+  location.value =""
+}
+
+import {
+  Card,
+  CardTitle,
+  CardHeader,
+  CardContent,
+ } from "@/components/ui/card";
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 </script>
 
 <template>
-  <h2>Create New Box</h2>
-  <label for="name">Name:</label>
-  <input id="name" type="text" v-model="name"/>
-  <br>
-  <label for="name">Location:</label>
-  <input id="location" type="text" v-model="location"/>
-  <br>
-  <button @click="submit">Submit</button>
+  <Card class="w-[450px]">
+    <CardHeader>
+      <CardTitle>Create new Box</CardTitle>
+    </CardHeader>
+    <CardContent>
+      <!-- TODO: Make this a proper form that you can submit with enter -->
+      <div class="grid w-full max-w-sm items-center gap-1.5">
+        <Label for="name">Name</Label>
+        <Input id="name" type="text" placeholder="Box 1" v-model="name"/>
+        <Label for="location">Location</Label>
+        <Input id="location" type="text" placeholder="Spare bedroom" v-model="location"/>
+      </div>
+    </CardContent>
+    <CardFooter class="flex justify-between px-6 pb-6">
+      <Button @click="clearInputs" variant="outline">Clear</Button>
+      <Button @click="submit">Create</Button>
+    </CardFooter>
+  </Card>
 </template>
