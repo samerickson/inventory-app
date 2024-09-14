@@ -19,6 +19,8 @@ onMounted(() => {
 
 <template>
   <!-- TODO: These should be displayed in a flexbox grid. -->
-  <BoxEntry class="my-4" v-for="box in boxes" :box="box" :key="box.id"/>
+  <div class="grid grid-flow-col auto-cols-max gap-x-4">
+    <BoxEntry class="my-4" v-for="box in boxes" :box="box" :key="box.id"/>
+  </div>
   <CreateBox @created="getData"/>
 </template>
