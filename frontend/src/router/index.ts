@@ -10,6 +10,7 @@ const router = createRouter({
       component: HomeView,
       children: [
         {
+          name: 'allBoxes',
           path: '',
           component: import('../views/allBoxes.vue')
         },

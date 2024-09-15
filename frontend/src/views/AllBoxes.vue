@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import BoxEntry from '@/components/boxEntry.vue';
 import CreateBox from '@/components/createBox.vue';
+import Grid from '@/components/grid.vue';
 import { onMounted, ref } from 'vue';
 
 const boxes = ref();
@@ -19,8 +20,8 @@ onMounted(() => {
 
 <template>
   <!-- TODO: These should be displayed in a flexbox grid. -->
-  <div class="grid grid-flow-col auto-cols-max gap-x-4">
-    <BoxEntry class="my-4" v-for="box in boxes" :box="box" :key="box.id"/>
-  </div>
+   <Grid>
+      <BoxEntry class="my-4" v-for="box in boxes" :box="box" :key="box.id"/>
+   </Grid>
   <CreateBox @created="getData"/>
 </template>
