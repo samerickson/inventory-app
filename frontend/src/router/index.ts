@@ -12,7 +12,7 @@ const router = createRouter({
         {
           name: 'allBoxes',
           path: '',
-          component: import('../views/allBoxes.vue')
+          component: import('../views/AllBoxes.vue')
         },
         {
           name: 'boxContents',
