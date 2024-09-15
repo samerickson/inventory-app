@@ -4,7 +4,6 @@ import {
 } from '@/components/ui/button';
 import {
   Card,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -12,11 +11,20 @@ import {
 
 interface ItemProp {
   item: {
-    name: string
+    name: string,
+    id: number,
   };
 }
 
-const props = defineProps<ItemProp>()
+const props = defineProps<ItemProp>();
+const emit = defineEmits(['deleted'])
+
+const removeItem = () => {
+  // TODO: handle failures
+  fetch(`http://localhost:8080/v1/item/${props.item.id}`, { method: 'DELETE'}).then(() => {
+    emit('deleted');
+  });
+}
 </script>
 
 <template>
@@ -29,7 +37,7 @@ const props = defineProps<ItemProp>()
       <Button variant="outline">
         Edit
       </Button>
-      <Button variant="destructive">
+      <Button variant="destructive" @click="removeItem">
         Remove
       </Button>
     </CardFooter>

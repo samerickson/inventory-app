@@ -73,6 +73,7 @@ loadContents();
         </Button>
       </DialogTrigger>
       <Item
+        @deleted="loadContents()"
         v-for="item in box.items"
         :key="item.id"
         :item="item"
