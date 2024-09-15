@@ -63,6 +63,7 @@ loadContents();
     </h3>
     <Dialog>
       <Button
+      class="mr-2"
         variant="outline"
         @click="router.push({ name: 'allBoxes'})"
       >
