@@ -17,6 +17,7 @@ import {
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import Grid from '@/components/grid.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -72,12 +73,14 @@ loadContents();
           Add Item
         </Button>
       </DialogTrigger>
-      <Item
+      <Grid>
+        <Item
         @deleted="loadContents()"
         v-for="item in box.items"
         :key="item.id"
         :item="item"
       />
+      </Grid>
       <DialogContent class="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Add Item</DialogTitle>
