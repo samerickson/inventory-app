@@ -19,12 +19,16 @@ const router = useRouter();
   <Card class="w-[250px]">
     <CardHeader>
       <CardTitle>{{ props.box.name }}</CardTitle>
-      <CardDescription>Location: {{  props.box.location }}</CardDescription>
+      <CardDescription>Location: {{ props.box.location }}</CardDescription>
     </CardHeader>
     <CardFooter class="flex justify-end px-6 pb-6">
-      <Button @click="() => {
-      router.push({ name: 'boxContents', params: { id: box.id }})
-    }">Open</Button>
+      <Button
+        @click="() => {
+          router.push({ name: 'boxContents', params: { id: box.id }})
+        }"
+      >
+        Open
+      </Button>
     </CardFooter>
   </Card>
 </template>

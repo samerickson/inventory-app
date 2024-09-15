@@ -4,7 +4,9 @@ import { RouterView } from 'vue-router'
 
 <template>
   <div class="mx-8">
-    <h1 class="text-3xl my-4">Inventory App</h1>
+    <h1 class="text-3xl my-4">
+      Inventory App
+    </h1>
     <RouterView />
   </div>
 </template>

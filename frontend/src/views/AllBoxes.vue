@@ -20,8 +20,13 @@ onMounted(() => {
 
 <template>
   <!-- TODO: These should be displayed in a flexbox grid. -->
-   <Grid>
-      <BoxEntry class="my-4" v-for="box in boxes" :box="box" :key="box.id"/>
-   </Grid>
-  <CreateBox @created="getData"/>
+  <Grid>
+    <BoxEntry
+      v-for="box in boxes"
+      :key="box.id"
+      class="my-4"
+      :box="box"
+    />
+  </Grid>
+  <CreateBox @created="getData" />
 </template>

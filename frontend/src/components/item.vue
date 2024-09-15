@@ -24,11 +24,14 @@ const props = defineProps<ItemProp>()
     <CardHeader>
       <CardTitle>{{ props.item.name }}</CardTitle>
     </CardHeader>
-    <CardContent>
-    </CardContent>
+    <CardContent />
     <CardFooter class="flex justify-between px-6 pb-6">
-      <Button variant="outline">Edit</Button>
-      <Button variant="destructive">Remove</Button>
+      <Button variant="outline">
+        Edit
+      </Button>
+      <Button variant="destructive">
+        Remove
+      </Button>
     </CardFooter>
   </Card>
 </template>

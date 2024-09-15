@@ -43,14 +43,31 @@ import { Input } from '@/components/ui/input'
       <!-- TODO: Make this a proper form that you can submit with enter -->
       <div class="grid w-full max-w-sm items-center gap-1.5">
         <Label for="name">Name</Label>
-        <Input id="name" type="text" placeholder="Box 1" v-model="name"/>
+        <Input
+          id="name"
+          v-model="name"
+          type="text"
+          placeholder="Box 1"
+        />
         <Label for="location">Location</Label>
-        <Input id="location" type="text" placeholder="Spare bedroom" v-model="location"/>
+        <Input
+          id="location"
+          v-model="location"
+          type="text"
+          placeholder="Spare bedroom"
+        />
       </div>
     </CardContent>
     <CardFooter class="flex justify-between px-6 pb-6">
-      <Button @click="clearInputs" variant="outline">Clear</Button>
-      <Button @click="submit">Create</Button>
+      <Button
+        variant="outline"
+        @click="clearInputs"
+      >
+        Clear
+      </Button>
+      <Button @click="submit">
+        Create
+      </Button>
     </CardFooter>
   </Card>
 </template>
