@@ -16,8 +16,8 @@ const router = createRouter({
         },
         {
           name: 'boxContents',
-          path: ':id',
-          component: import('../views/BoxContents.vue')
+          path: 'box/:id',
+          component: import('../views/BoxContents.vue'),
         }
       ]
     },
