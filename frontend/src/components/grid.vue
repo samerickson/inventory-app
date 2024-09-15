@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-flow-col auto-cols-max gap-x-4">
+  <div class="flex flex-wrap gap-x-4">
     <slot />
   </div>
 </template>
