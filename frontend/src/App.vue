@@ -7,7 +7,7 @@ import ThemeToggle from './components/themeToggle.vue';
   <div class="container">
     <header class="flex justify-between my-4">
       <h1 class="text-3xl">
-        Inventory App
+        🏬 Inventory App
       </h1>
       <ThemeToggle />
     </header>
