@@ -1,0 +1,51 @@
+services:
+  frontend:
+    cpus: 2
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    develop:
+      watch:
+        - action: sync
+          path: ./frontend
+          target: /app
+          ignore:
+            - node_modules
+    ports:
+      - 5173:5173
+    networks:
+      - backend
+
+  webserver:
+      build:
+        context: ./backend
+        # Correct the path to your Dockerfile
+        dockerfile: Dockerfile
+      # working_dir value has to be the same of mapped volume
+      working_dir: /app
+      depends_on:
+        - database
+      ports:
+        - 8080:8080
+      env_file: ".env"
+      environment:
+        - POSTGRES_HOST=database
+      networks:
+        - backend
+      develop:
+        watch:
+          - action: sync+restart
+            path: ./backend
+            target: /app
+
+  database:
+    env_file: ".env"
+    image: 'postgres:12-alpine3.19'
+    networks:
+      - backend
+    ports:
+      - 5432:5432
+
+networks:
+  backend:
+    driver: bridge
