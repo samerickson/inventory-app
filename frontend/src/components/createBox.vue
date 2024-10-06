@@ -7,16 +7,16 @@ const location = ref();
 const emit = defineEmits(['created'])
 
 const submit = () => {
-fetch("http://localhost:8080/v1/box/", {
-  method: "POST",
-  body: JSON.stringify({ name: name.value, location: location.value })
-}).then(() => {
-  emit('created')
-}).catch(error => {
-  console.error(error)
-}).finally(() => {
-  clearInputs();
-})
+  fetch("http://localhost:8080/v1/box/", {
+    method: "POST",
+    body: JSON.stringify({ name: name.value, location: location.value })
+  }).then(() => {
+    emit('created')
+  }).catch(error => {
+    console.error(error)
+  }).finally(() => {
+    clearInputs();
+  })
 }
 
 const clearInputs = () => {
