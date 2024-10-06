@@ -16,6 +16,7 @@ func AddItems(rg *gin.RouterGroup) {
 	r.GET("/:id", getItem)
 	r.POST("/", createItem)
 	r.DELETE(("/:id"), deleteItem)
+	r.PUT("/:id", updateItem)
 }
 
 func getItem(c *gin.Context) {
@@ -65,4 +66,29 @@ func deleteItem(c *gin.Context) {
 	var item models.Item
 	persistence.Db.Delete(&item, id)
 	c.JSON(http.StatusOK, gin.H{"id": id, "result": "deleted"})
+}
+
+func updateItem(c *gin.Context) {
+	id := c.Params.ByName("id")
+
+	var item models.Item
+	if err := persistence.Db.Where("id = ?", id).First(&item).Error; err != nil {
+		c.AbortWithStatus(http.StatusNotFound)
+		fmt.Println(err)
+	} else {
+		var newBox models.Item
+
+		if err := c.BindJSON(&newBox); err != nil {
+			c.Status(http.StatusBadRequest)
+			return
+		}
+
+		item.Name = newBox.Name
+
+		if err := persistence.Db.Save(&item).Error; err != nil {
+			c.AbortWithStatus(http.StatusInternalServerError)
+		}
+
+		c.Status(http.StatusNoContent)
+	}
 }
