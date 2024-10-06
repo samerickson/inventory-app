@@ -16,6 +16,7 @@ func AddBoxes(rg *gin.RouterGroup) {
 	r.GET("/", getAllBoxes)
 	r.GET("/:id", getBox)
 	r.DELETE("/:id", deleteBox)
+	r.PUT("/:id", updateBox)
 }
 
 func getBox(c *gin.Context) {
@@ -65,4 +66,30 @@ func deleteBox(c *gin.Context) {
 	var box models.Box
 	persistence.Db.Delete(&box, id)
 	c.JSON(http.StatusOK, gin.H{"id": id, "result": "deleted"})
+}
+
+func updateBox(c *gin.Context) {
+	id := c.Params.ByName("id")
+
+	var box models.Box
+	if err := persistence.Db.Where("id = ?", id).First(&box).Error; err != nil {
+		c.AbortWithStatus(http.StatusNotFound)
+		fmt.Println(err)
+	} else {
+		var newBox models.Box
+
+		if err := c.BindJSON(&newBox); err != nil {
+			c.Status(http.StatusBadRequest)
+			return
+		}
+
+		box.Location = newBox.Location
+		box.Name = newBox.Name
+
+		if err := persistence.Db.Save(&box).Error; err != nil {
+			c.AbortWithStatus(http.StatusInternalServerError)
+		}
+
+		c.Status(http.StatusNoContent)
+	}
 }
