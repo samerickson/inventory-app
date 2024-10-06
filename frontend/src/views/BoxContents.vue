@@ -80,6 +80,7 @@ loadContents();
           :key="item.id"
           :item="item"
           @deleted="loadContents()"
+          @updated="loadContents()"
         />
       </Grid>
       <DialogContent class="sm:max-w-[425px]">
