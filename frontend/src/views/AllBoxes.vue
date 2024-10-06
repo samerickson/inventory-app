@@ -26,6 +26,7 @@ onMounted(() => {
       :key="box.id"
       class="my-4"
       :box="box"
+      @updated="getData"
     />
   </Grid>
   <CreateBox @created="getData" />

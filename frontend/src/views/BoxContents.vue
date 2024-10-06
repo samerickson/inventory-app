@@ -63,7 +63,7 @@ loadContents();
     </h3>
     <Dialog>
       <Button
-      class="mr-2"
+        class="mr-2"
         variant="outline"
         @click="router.push({ name: 'allBoxes'})"
       >
@@ -76,11 +76,11 @@ loadContents();
       </DialogTrigger>
       <Grid>
         <Item
-        @deleted="loadContents()"
-        v-for="item in box.items"
-        :key="item.id"
-        :item="item"
-      />
+          v-for="item in box.items"
+          :key="item.id"
+          :item="item"
+          @deleted="loadContents()"
+        />
       </Grid>
       <DialogContent class="sm:max-w-[425px]">
         <DialogHeader>
