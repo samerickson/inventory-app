@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import { useColorMode } from '@vueuse/core'
-import { Icon } from '@iconify/vue'
-import { Button } from '@/components/ui/button'
+import {useColorMode} from '@vueuse/core';
+import {Icon} from '@iconify/vue';
+import {Button} from '@/components/ui/button';
 
-const mode = useColorMode({ disableTransition: false });
+const mode = useColorMode({disableTransition: false});
 const toggleTheme = () => {
-  // TODO: it is also possible for mode to be auto
-  if (mode.value === 'light') {
-    mode.value = 'dark';
-    return;
-  }
+	// TODO: it is also possible for mode to be auto
+	if (mode.value === 'light') {
+		mode.value = 'dark';
+		return;
+	}
 
-  mode.value = 'light'
-}
+	mode.value = 'light';
+};
 </script>
 
 <template>

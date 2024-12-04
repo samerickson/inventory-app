@@ -1,22 +1,22 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import {ref} from 'vue';
+import {useRoute, useRouter} from 'vue-router';
 
 import Item from '@/components/item.vue';
 
-import { Button } from '@/components/ui/button'
+import {Button} from '@/components/ui/button';
 import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
+	Dialog,
+	DialogClose,
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
+} from '@/components/ui/dialog';
+import {Input} from '@/components/ui/input';
+import {Label} from '@/components/ui/label';
 import Grid from '@/components/grid.vue';
 
 const route = useRoute();
@@ -27,33 +27,34 @@ const box = ref();
 const newItemName = ref();
 
 const loadContents = () => {
-  // TODO: handle 404 or other errors.
-  fetch(`http://localhost:8080/v1/box/${boxId}`).then(async (response) => {
-    box.value = await response.json();
-  });
-}
+	// TODO: handle 404 or other errors.
+	fetch(`http://localhost:8080/v1/box/${boxId}`).then(async response => {
+		box.value = await response.json();
+	});
+};
 
 const addNewItem = () => {
-  fetch(`http://localhost:8080/v1/item/`, {
-    method: 'POST',
-    headers: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      name: newItemName.value,
-      box: boxId,
-    })
-  }).then(async () => {
-    loadContents();
-  });
-}
+	fetch('http://localhost:8080/v1/item/', {
+		method: 'POST',
+		headers: {
+			Accept: 'application/json',
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({
+			name: newItemName.value,
+			box: boxId,
+		}),
+	}).then(async () => {
+		loadContents();
+	});
+};
 
 loadContents();
 </script>
 
 <template>
   <!-- Only show the details once we get them -->
+  <!-- TODO: show a skeleton while this is loading -->
   <div v-if="box">
     <h2 class="text-2xl">
       📦 {{ box.name }}

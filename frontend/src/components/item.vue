@@ -1,23 +1,23 @@
 <script setup lang="ts">
 import {
-  Button
+	Button,
 } from '@/components/ui/button';
 import {
-  Card,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
+	Card,
+	CardFooter,
+	CardHeader,
+	CardTitle,
+} from '@/components/ui/card';
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
+	Popover,
+	PopoverContent,
+	PopoverTrigger,
 } from '@/components/ui/popover';
 
-import { Label } from '@/components/ui/label'
-import { Input } from '@/components/ui/input'
+import {Label} from '@/components/ui/label';
+import {Input} from '@/components/ui/input';
 
-import { ref } from 'vue';
+import {ref} from 'vue';
 
 interface ItemProp {
   item: {
@@ -27,29 +27,29 @@ interface ItemProp {
 }
 
 const props = defineProps<ItemProp>();
-const emit = defineEmits(['deleted', 'updated'])
+const emit = defineEmits(['deleted', 'updated']);
 
 const name = ref<string>(props.item.name);
 const isOpen = ref<boolean>(false);
 
 const removeItem = () => {
-  // TODO: handle failures
-  fetch(`http://localhost:8080/v1/item/${props.item.id}`, { method: 'DELETE'}).then(() => {
-    emit('deleted');
-  });
-}
+	// TODO: handle failures
+	fetch(`http://localhost:8080/v1/item/${props.item.id}`, {method: 'DELETE'}).then(() => {
+		emit('deleted');
+	});
+};
 
 const save = () => {
-  fetch(`http://localhost:8080/v1/item/${props.item.id}`, {
-    method: "PUT",
-    body: JSON.stringify({ name: name.value })
-  }).then(() => {
-    emit('updated')
-    isOpen.value = false; // Close the popup on success.
-  }).catch(error => {
-    console.error(error)
-  })
-}
+	fetch(`http://localhost:8080/v1/item/${props.item.id}`, {
+		method: 'PUT',
+		body: JSON.stringify({name: name.value}),
+	}).then(() => {
+		emit('updated');
+		isOpen.value = false; // Close the popup on success.
+	}).catch(error => {
+		console.error(error);
+	});
+};
 </script>
 
 <template>
@@ -95,7 +95,10 @@ const save = () => {
           </div>
         </PopoverContent>
       </Popover>
-      <Button variant="destructive" @click="removeItem">
+      <Button
+        variant="destructive"
+        @click="removeItem"
+      >
         Remove
       </Button>
     </CardFooter>

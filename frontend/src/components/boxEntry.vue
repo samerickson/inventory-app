@@ -1,46 +1,46 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-import { Button } from './ui/button';
+import {ref} from 'vue';
+import {useRouter} from 'vue-router';
+import {Button} from './ui/button';
 
 // See: https://www.shadcn-vue.com/docs/components/card.html
 import {
-  Card,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
+	Card,
+	CardDescription,
+	CardFooter,
+	CardHeader,
+	CardTitle,
+} from '@/components/ui/card';
 
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
+	Popover,
+	PopoverContent,
+	PopoverTrigger,
 } from '@/components/ui/popover';
 
-import { Label } from '@/components/ui/label'
-import { Input } from '@/components/ui/input'
+import {Label} from '@/components/ui/label';
+import {Input} from '@/components/ui/input';
 
-const props = defineProps(['box'])
+const props = defineProps(['box']);
 const router = useRouter();
 
 const name = ref<string>(props.box.name);
 const location = ref<string>(props.box.location);
 const isOpen = ref<boolean>(false);
 
-const emit = defineEmits(['updated'])
+const emit = defineEmits(['updated']);
 
 const saveEdit = () => {
-  fetch(`http://localhost:8080/v1/box/${props.box.id}`, {
-    method: "PUT",
-    body: JSON.stringify({ name: name.value, location: location.value })
-  }).then(() => {
-    emit('updated')
-    isOpen.value = false; // Close the popup on success.
-  }).catch(error => {
-    console.error(error)
-  })
-}
+	fetch(`http://localhost:8080/v1/box/${props.box.id}`, {
+		method: 'PUT',
+		body: JSON.stringify({name: name.value, location: location.value}),
+	}).then(() => {
+		emit('updated');
+		isOpen.value = false; // Close the popup on success.
+	}).catch(error => {
+		console.error(error);
+	});
+};
 </script>
 
 <template>

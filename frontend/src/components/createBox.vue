@@ -1,37 +1,37 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import {ref} from 'vue';
 
 const name = ref();
 const location = ref();
 
-const emit = defineEmits(['created'])
+const emit = defineEmits(['created']);
 
 const submit = () => {
-  fetch("http://localhost:8080/v1/box/", {
-    method: "POST",
-    body: JSON.stringify({ name: name.value, location: location.value })
-  }).then(() => {
-    emit('created')
-  }).catch(error => {
-    console.error(error)
-  }).finally(() => {
-    clearInputs();
-  })
-}
+	fetch('http://localhost:8080/v1/box/', {
+		method: 'POST',
+		body: JSON.stringify({name: name.value, location: location.value}),
+	}).then(() => {
+		emit('created');
+	}).catch(error => {
+		console.error(error);
+	}).finally(() => {
+		clearInputs();
+	});
+};
 
 const clearInputs = () => {
-  name.value = ""
-  location.value =""
-}
+	name.value = '';
+	location.value = '';
+};
 
 import {
-  Card,
-  CardTitle,
-  CardHeader,
-  CardContent,
- } from "@/components/ui/card";
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
+	Card,
+	CardTitle,
+	CardHeader,
+	CardContent,
+} from '@/components/ui/card';
+import {Button} from '@/components/ui/button';
+import {Input} from '@/components/ui/input';
 </script>
 
 <template>
