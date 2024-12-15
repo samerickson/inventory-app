@@ -50,10 +50,8 @@ func searchItems(c *gin.Context) {
 		return
 	}
 
-	sqlQuery := "name ILIKE ?"
-
 	var items []models.Item
-	result := persistence.Db.Where(sqlQuery, "%"+query+"%").Find(&items)
+	result := persistence.Db.Where("name ILIKE ?", "%"+query+"%").Find(&items)
 
 	if result.Error != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": result.Error.Error()})
