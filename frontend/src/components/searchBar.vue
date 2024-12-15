@@ -12,6 +12,13 @@ const searchQuery = ref('');
 
 onMounted(async () => {
   await router.isReady();
+
+  if (!route.query.query) {
+    router.push({ name: 'allBoxes' })
+  }
+
+console.log(route.query)
+
   searchQuery.value = route.query.query as string;
 })
 
@@ -19,7 +26,6 @@ watch(() => searchQuery.value, (val) => {
 
   if (val === '') {
     router.push({ name: 'allBoxes' })
-  
   }
   else if (toggleState.value === 'item') {
     router.push({ name: 'searchItems', query: { query: val}})

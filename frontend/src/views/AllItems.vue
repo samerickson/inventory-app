@@ -10,7 +10,15 @@ const route = useRoute();
 const items = ref();
 
 const getData = () => {
-	// TODO: handle 404 or other errors.
+
+  if (!route.query.query) {
+    fetch(`http://localhost:8080/v1/item/`, {cache: 'no-cache'}).then(async response => {
+      items.value = await response.json();
+    });
+
+    return;
+  }
+
   fetch(`http://localhost:8080/v1/item/search?query=${route.query.query}`, {cache: 'no-cache'}).then(async response => {
 		items.value = await response.json();
 	});
