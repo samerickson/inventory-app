@@ -17,8 +17,6 @@ onMounted(async () => {
     router.push({ name: 'allBoxes' })
   }
 
-console.log(route.query)
-
   searchQuery.value = route.query.query as string;
 })
 
