@@ -29,9 +29,12 @@ import {
 	CardTitle,
 	CardHeader,
 	CardContent,
+  CardFooter,
 } from '@/components/ui/card';
 import {Button} from '@/components/ui/button';
 import {Input} from '@/components/ui/input';
+
+import { Label } from './ui/label';
 </script>
 
 <template>
