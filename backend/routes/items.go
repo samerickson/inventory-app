@@ -15,7 +15,7 @@ func AddItems(rg *gin.RouterGroup) {
 	r.GET("/", getAllItems)
 	r.GET("/:id", getItem)
 	r.POST("/", createItem)
-	r.DELETE(("/:id"), deleteItem)
+	r.DELETE("/:id", deleteItem)
 	r.PUT("/:id", updateItem)
 	r.GET("/search", searchItems)
 }
