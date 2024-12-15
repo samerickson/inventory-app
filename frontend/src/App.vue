@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {RouterView} from 'vue-router';
 import ThemeToggle from '@/components/themeToggle.vue';
-import {Input} from '@/components/ui/input';
+import SearchBar from './components/searchBar.vue';
 </script>
 
 <template>
@@ -13,10 +13,8 @@ import {Input} from '@/components/ui/input';
       <ThemeToggle />
     </header>
 
-    <Input
-      class="max-w-96"
-      placeholder="Search"
-    />
+    <SearchBar />
+
     <RouterView />
   </div>
 </template>
