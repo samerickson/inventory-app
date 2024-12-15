@@ -17,6 +17,7 @@ func AddItems(rg *gin.RouterGroup) {
 	r.POST("/", createItem)
 	r.DELETE(("/:id"), deleteItem)
 	r.PUT("/:id", updateItem)
+	r.GET("/search", searchItems)
 }
 
 func getItem(c *gin.Context) {
@@ -39,6 +40,27 @@ func getAllItems(c *gin.Context) {
 	} else {
 		c.JSON(http.StatusOK, items)
 	}
+}
+
+func searchItems(c *gin.Context) {
+	query := c.DefaultQuery("query", "") // Default to empty string if no query parameter
+
+	if query == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Query parameter is required"})
+		return
+	}
+
+	sqlQuery := "name ILIKE ?"
+
+	var items []models.Item
+	result := persistence.Db.Where(sqlQuery, "%"+query+"%").Find(&items)
+
+	if result.Error != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": result.Error.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, items)
 }
 
 func createItem(c *gin.Context) {
