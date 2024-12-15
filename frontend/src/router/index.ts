@@ -10,8 +10,8 @@ const router = createRouter({
       component: HomeView,
       children: [
         {
-          name: 'allBoxes',
-          path: '',
+          name: 'box',
+          path: 'box',
           component: () => import('../views/AllBoxes.vue'),
         },
         {
@@ -20,8 +20,8 @@ const router = createRouter({
           component: () => import('../views/BoxContents.vue'),
         },
         {
-          name: 'searchItems',
-          path: 'items',
+          name: 'item',
+          path: 'item',
           component: () => import('../views/AllItems.vue')
         }
       ],
