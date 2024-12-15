@@ -17,6 +17,7 @@ func AddBoxes(rg *gin.RouterGroup) {
 	r.GET("/:id", getBox)
 	r.DELETE("/:id", deleteBox)
 	r.PUT("/:id", updateBox)
+	r.GET("search", searchItems)
 }
 
 func getBox(c *gin.Context) {
@@ -29,6 +30,25 @@ func getBox(c *gin.Context) {
 	} else {
 		c.JSON(http.StatusOK, box)
 	}
+}
+
+func searchBox(c *gin.Context) {
+	query := c.DefaultQuery("query", "") // Default to empty string if no query parameter
+
+	if query == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Query parameter is required"})
+		return
+	}
+
+	var boxes []models.Box
+	result := persistence.Db.Where("name ILIKE ?", "%"+query+"%").Find(&boxes)
+
+	if result.Error != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": result.Error.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, boxes)
 }
 
 func createBox(c *gin.Context) {
