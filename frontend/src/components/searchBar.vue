@@ -18,7 +18,9 @@ onMounted(async () => {
     // TODO: read the state of the toggle from browser local storage
     // and set that accordingly here
     router.push({ name: toggleState.value, query: { query: searchQuery.value }})
-  }
+    } else if(route.path === '/item') {
+        toggleState.value = 'item';
+    }
 })
 
 // Watch for changes from item to box and vice versa
@@ -33,7 +35,7 @@ watch(() => searchQuery.value, (query) => {
   }
   else if (toggleState.value === 'box') {
     router.push({ name: 'box', query: { query }})
-  } 
+  }
 })
 </script>
 
